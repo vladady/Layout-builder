@@ -10,5 +10,8 @@ $plugin = array(
   //'icon' => 'onecol.png',
   'theme' => 'panels_layout_builder',
   'css' => 'panels_layout_builder.css',
-  'regions' => array('middle' => t('Middle column')),
+  'regions' => array(
+    'region1' => t('Region1'),
+    'region2' => t('Region2'),
+  ),
 );

@@ -9,7 +9,13 @@
  * is already rendered content, rather than a pane containing CTools content
  * to be rendered. Styles are not supported.
  */
-class layout_builder_editor extends panels_renderer_editor {
+
+/*
+  panels_renderer_standard
+  panels_renderer_editor
+  panels_renderer_ipe
+*/
+class layout_builder_editor extends panels_renderer_ipe {
 /*  function render_regions() {
     $this->rendered['regions'] = array();
     foreach ($this->display->content as $region_id => $content) {

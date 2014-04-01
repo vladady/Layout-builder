@@ -9,6 +9,10 @@ function layout_builder_ctools_plugin_directory($module, $plugin) {
   if ($module == 'panels' && in_array($plugin, $plugins)) {
   	return 'plugins/' . $plugin;
   }
+
+  if ($module == 'ctools' && $plugin == 'content_types') {
+    return 'plugins/' . $plugin;
+  }
 }
 
 function layout_builder_ctools_plugin_api($owner, $api) {
