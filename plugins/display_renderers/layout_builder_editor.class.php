@@ -35,4 +35,19 @@ class layout_builder_editor extends panels_renderer_ipe {
   function prepare($external_settings = NULL) {
     $this->prep_run = TRUE;
   }*/
+  function render_pane_content(&$pane) {
+    $current_display = &drupal_static('current_display');
+
+    if(empty($current_display)) {
+      $current_display = $this;
+    }
+    dpm($current_display);
+    parent::render_pane_content($pane);
+  }
+
+  function ajax_add_pane($region = NULL, $type_name = NULL, $subtype_name = NULL, $step = NULL) {
+      //dpm(func_get_args());
+      parent::ajax_add_pane($region, $type_name, $subtype_name, $step);
+  }
+
 }

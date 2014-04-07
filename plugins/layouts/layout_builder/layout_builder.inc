@@ -10,8 +10,25 @@ $plugin = array(
   //'icon' => 'onecol.png',
   'theme' => 'panels_layout_builder',
   'css' => 'panels_layout_builder.css',
-  'regions' => array(
-    'region1' => t('Region1'),
-    'region2' => t('Region2'),
-  ),
+  'regions function' => 'layout_builder_regions',
 );
+
+function layout_builder_regions($display, $settings, $layout) {
+   $cache = cache_get($display->cache_key);
+
+   
+   $regions = array();
+
+   if(isset($cache->data)) {
+     foreach ($cache->data as $region_id) {
+       $regions[$region_id] = $region_id;
+     }
+   }
+
+   $default = array(
+       'region1' => t('Region1'),
+   );
+   $regions += $default;
+   dpm($regions);
+   return $regions;
+}
