@@ -81,9 +81,11 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
   $block->content['#prefix'] = '<div>' . rand(100, 1);
   $block->content['#suffix'] = '</div>';
   //foreach($handler->prepared['regions'] as $region_id => $conf) {
-  
+
+  //@TODO - don't hardocde nested regions
   $conf['regions'] = array('region2');
-  dpm($handler);
+
+  //@TODO - fix dummy
   if(empty($handler)) {
       $block->content = 'dummy';
       return $block;
@@ -109,7 +111,7 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
 //      '#prefix' => '<div style="width:49%;padding:3px;float:left">',
 //      '#suffix' => '</div>',
 //  );
-   dpm($block);
+   //dpm($block);
   //}
 
   $block->content = drupal_render($block->content); 

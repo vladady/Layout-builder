@@ -6,7 +6,7 @@
 // @debug only
 Drupal.settings.Panels = Drupal.settings.Panels || {};
 Drupal.settings.Panels.RegionLock = {
-  10: { 'top': false, 'left': true, 'middle': true }
+  10: {'top': false, 'left': true, 'middle': true}
 }
 
 Drupal.PanelsIPE = {
@@ -221,7 +221,7 @@ function DrupalPanelsIPE(cache_key, cfg) {
       element_settings.url = $(this.form).attr('action');
       element_settings.setClick = true;
       element_settings.event = 'click';
-      element_settings.progress = { 'type': 'throbber' };
+      element_settings.progress = {'type': 'throbber'};
       element_settings.ipe_cache_key = cache_key;
 
       var base = $(this).attr('id');
@@ -276,16 +276,32 @@ function DrupalPanelsIPE(cache_key, cfg) {
     $('div.panels-ipe-region', ipe.topParent).each(function() {
       var val = '';
       var region = $(this).attr('id').split('panels-ipe-regionid-')[1];
-      $(this).find('div.panels-ipe-portlet-wrapper').each(function() {
-        var id = $(this).attr('id').split('panels-ipe-paneid-')[1];
-        if (id) {
-          if (val) {
-            val += ',';
-          }
-          val += id;
-        }
-      });
+
+      $(this).find('div.panels-ipe-sort-container').first()
+          .children('div.panels-ipe-portlet-wrapper')
+          .each(function () {
+            var id = $(this).attr('id').split('panels-ipe-paneid-')[1];
+            if (id) {
+              if (val) {
+                val += ',';
+              }
+              val += id;
+            }
+          })
+ 
       $('input[name="panel[pane][' +  region + ']"]', ipe.control).val(val);
+      return;
+      
+//      $(this).find('div.panels-ipe-portlet-wrapper').each(function() {
+//        var id = $(this).attr('id').split('panels-ipe-paneid-')[1];
+//        if (id) {
+//          if (val) {
+//            val += ',';
+//          }
+//          val += id;
+//        }
+//      });
+//      $('input[name="panel[pane][' +  region + ']"]', ipe.control).val(val);
     });
   }
 
@@ -335,6 +351,28 @@ function DrupalPanelsIPE(cache_key, cfg) {
       // cannot be placed after them.
       $('div.panels-ipe-portlet-static', this).each(function() {
         //$(this).prependTo($(this).parent().parent());
+
+      });
+    });
+  }
+
+  this.SortPaneContainers = function(paneId) {
+    $('div#panels-ipe-paneid-' + paneId, this.topParent).each(function() {
+      
+      $(this).find('div.panels-ipe-portlet-marker').parent()
+        .wrapInner('<div class="panels-ipe-sort-container" />');
+
+      $(this).find('div.panels-ipe-sort-container')
+        .children('div.panels-ipe-portlet-static')
+        .each(function() {
+            $(this).prependTo($(this).parent().parent());
+        });
+
+      // Move our gadgets outside of the sort container so that sortables
+      // cannot be placed after them.
+      $('div.panels-ipe-portlet-static', this).each(function() {
+        //$(this).prependTo($(this).parent().parent());
+
       });
     });
   }
@@ -361,6 +399,7 @@ $(function() {
 
   Drupal.ajax.prototype.commands.addNewPane = function(ajax, data, status) {
     if (Drupal.PanelsIPE.editors[data.key]) {
+      Drupal.PanelsIPE.editors[data.key].SortPaneContainers(data.paneId);
       Drupal.PanelsIPE.editors[data.key].changed = true;
     }
   };

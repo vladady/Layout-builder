@@ -35,7 +35,51 @@ class layout_builder_editor extends panels_renderer_ipe {
   function prepare($external_settings = NULL) {
     $this->prep_run = TRUE;
   }*/
+
+
+    function render_panes() {
+      ctools_include('content');
+
+      // First, render all the panes into little boxes.
+      $this->rendered['panes'] = array();
+
+      // TODO - make sorting of panes according to nesting
+      $this->prepared['panes'] = array_reverse($this->prepared['panes'], true);
+
+      foreach ($this->prepared['panes'] as $pid => $pane) {
+        $content = $this->render_pane($pane);
+        if ($content) {
+          $this->rendered['panes'][$pid] = $content;
+        }
+      }
+      return $this->rendered['panes'];
+  }
+  
+  function command_add_pane($pid) {
+    if (is_object($pid)) {
+      $pane = $pid;
+    }
+    else {
+      $pane = $this->display->content[$pid];
+    }
+
+    $this->commands[] = array(
+      'command' => 'insertNewPane',
+      'regionId' => $pane->panel,
+      'renderedPane' => $this->render_pane($pane),
+    );
+    $this->commands[] = ajax_command_changed("#panels-ipe-display-{$this->clean_key}");
+    
+    //Added paneId to create sort region
+    $this->commands[] = array(
+      'command' => 'addNewPane',
+      'paneId' => $pane->pid,
+      'key' => $this->clean_key,
+    );
+  }
+  
   function ajax_add_pane($region = NULL, $type_name = NULL, $subtype_name = NULL, $step = NULL) {
+      //Prepare in case of special panes
       if($type_name == 'layout_builder_regions') {
           $this->prepare();
       }
@@ -47,5 +91,6 @@ class layout_builder_editor extends panels_renderer_ipe {
 
       parent::ajax_add_pane($region, $type_name, $subtype_name, $step);
   }
-
+  
+  //@TODO - Save command cache static current display
 }
