@@ -82,11 +82,15 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
   $block->content['#suffix'] = '</div>';
   //foreach($handler->prepared['regions'] as $region_id => $conf) {
   
-  $conf['regions'] = array('region1', 'region2');
+  $conf['regions'] = array('region2');
+  dpm($handler);
+  if(empty($handler)) {
+      $block->content = 'dummy';
+      return $block;
+  }
   
   foreach($conf['regions'] as $region_id) {
     $region_panes = array();
-    dpm($region_id);
 
     foreach ($handler->prepared['regions'][$region_id]['pids'] as $pid) {
       $region_panes[$pid] = $handler->rendered['panes'][$pid];
@@ -108,6 +112,7 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
    dpm($block);
   //}
 
-  //$block->content = $handler->render_region('region2', array());
+  $block->content = drupal_render($block->content); 
+  
   return $block;
 }
