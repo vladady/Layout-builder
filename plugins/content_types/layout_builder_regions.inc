@@ -65,39 +65,26 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
   // initial content is blank
   $block->title = '';
   $block->content = array();
-  
-  //dpm(func_get_args());
+ 
   $display = panels_get_current_page_display();
-  dpm(debug_backtrace());
+  
   if(!$display) {
     $current_display = &drupal_static('current_display');
     $handler = $current_display;
-    //$handler->ren
-    //$handler = new layout_builder_editor();
   }
   else {
     $handler = $display->renderer_handler;
   }
-
-  dpm($handler);
-
+  
   $i = 0;
 
   $block->content['#prefix'] = '<div>' . rand(100, 1);
   $block->content['#suffix'] = '</div>';
   //foreach($handler->prepared['regions'] as $region_id => $conf) {
-
-  foreach($conf['regions'] as $region_id) {
-     //dpm($region_id);
-     $region = $handler->render_region($region_id, array());
-     //$region = '';
-     $block->content[$region_id] = $region;
-  }
-
-
-  return $block;
   
-  foreach($inner_regions as $region_id) {
+  $conf['regions'] = array('region1', 'region2');
+  
+  foreach($conf['regions'] as $region_id) {
     $region_panes = array();
     dpm($region_id);
 

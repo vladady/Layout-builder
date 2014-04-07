@@ -27,8 +27,10 @@ function layout_builder_regions($display, $settings, $layout) {
 
    $default = array(
        'region1' => t('Region1'),
+       'region2' => t('Region2'),
    );
+   
    $regions += $default;
-   dpm($regions);
+   //dpm($regions);
    return $regions;
 }
