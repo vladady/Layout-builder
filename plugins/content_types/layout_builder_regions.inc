@@ -90,7 +90,7 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
       $block->content = 'dummy';
       return $block;
   }
-  
+  dpm($handler);
   foreach($conf['regions'] as $region_id) {
     $region_panes = array();
 

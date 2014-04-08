@@ -36,6 +36,11 @@ function layout_builder_default_panels_renderer_pipeline() {
         'renderer' => 'layout_builder_editor',
         'options' => array(),
       ),
+      1 => array(
+        'access' => array(),
+        'renderer' => 'layout_builder_standard',
+        'options' => array(),
+      )
     ),
   );
   $pipelines[$pipeline->name] = $pipeline;
