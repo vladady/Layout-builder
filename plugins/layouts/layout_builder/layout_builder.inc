@@ -15,6 +15,7 @@ $plugin = array(
 
 function layout_builder_regions($display, $settings, $layout) {
    //@TODO - make real regions
+
    $cache = cache_get($display->cache_key);
    
    $regions = array();
@@ -27,7 +28,7 @@ function layout_builder_regions($display, $settings, $layout) {
 
    $default = array(
        'region1' => t('Region1'),
-       'region2' => t('Region2'),
+       //'region2' => t('Region2'),
    );
    
    $regions += $default;

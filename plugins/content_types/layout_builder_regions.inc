@@ -29,7 +29,7 @@ function layout_builder_regions_edit_form($form, &$form_state) {
 function layout_builder_regions_edit_form_submit($form, &$form_state) {
   $next_id = 0;
   $display = $form_state['display'];
-
+  dpm($display);
   foreach($display->panels as $region_id => $pids) {
     $id = str_replace('region', '', $region_id);
     if($id >= $next_id) {
@@ -90,7 +90,7 @@ function layout_builder_regions_render($subtype, $conf, $panel_args, $context = 
       $block->content = 'dummy';
       return $block;
   }
-  dpm($handler);
+
   foreach($conf['regions'] as $region_id) {
     $region_panes = array();
 
