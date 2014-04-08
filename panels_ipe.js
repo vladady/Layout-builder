@@ -16,7 +16,7 @@ Drupal.PanelsIPE = {
       .addClass('pane-delete-processed')
       .click(function() {
         if (confirm(Drupal.t('Remove this pane?'))) {
-          $(this).parents('div.panels-ipe-portlet-wrapper').fadeOut('medium', function() {
+          $(this).closest('div.panels-ipe-portlet-wrapper').fadeOut('medium', function() {
             var $sortable = $(this).closest('.ui-sortable');
             $(this).empty().remove();
             $sortable.trigger('sortremove');
