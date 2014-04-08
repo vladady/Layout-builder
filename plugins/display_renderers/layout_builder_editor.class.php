@@ -36,23 +36,30 @@ class layout_builder_editor extends panels_renderer_ipe {
     $this->prep_run = TRUE;
   }*/
 
+  function ajax_save_form($break = NULL) {
+    $current_display = &drupal_static('current_display');
+    if(empty($current_display)) {
+        $current_display = $this;
+    }
 
-    function render_panes() {
-      ctools_include('content');
+    parent::ajax_save_form($break);
+  }
+  function render_panes() {
+    ctools_include('content');
 
-      // First, render all the panes into little boxes.
-      $this->rendered['panes'] = array();
+    // First, render all the panes into little boxes.
+    $this->rendered['panes'] = array();
 
-      // TODO - make sorting of panes according to nesting
-      $this->prepared['panes'] = array_reverse($this->prepared['panes'], true);
+    // TODO - make sorting of panes according to nesting
+    $this->prepared['panes'] = array_reverse($this->prepared['panes'], true);
 
-      foreach ($this->prepared['panes'] as $pid => $pane) {
-        $content = $this->render_pane($pane);
-        if ($content) {
-          $this->rendered['panes'][$pid] = $content;
-        }
+    foreach ($this->prepared['panes'] as $pid => $pane) {
+      $content = $this->render_pane($pane);
+      if ($content) {
+        $this->rendered['panes'][$pid] = $content;
       }
-      return $this->rendered['panes'];
+    }
+    return $this->rendered['panes'];
   }
   
   function command_add_pane($pid) {
@@ -77,7 +84,7 @@ class layout_builder_editor extends panels_renderer_ipe {
       'key' => $this->clean_key,
     );
   }
-  
+
   function ajax_add_pane($region = NULL, $type_name = NULL, $subtype_name = NULL, $step = NULL) {
       //Prepare in case of special panes
       if($type_name == 'layout_builder_regions') {
