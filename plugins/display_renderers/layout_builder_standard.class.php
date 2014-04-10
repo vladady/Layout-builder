@@ -22,4 +22,22 @@ class layout_builder_standard extends panels_renderer_standard {
         parent::init($plugin, $display);
     }
     //@TODO - add 
+    function render_panes() {
+      dpm($this);
+      ctools_include('content');
+
+      // First, render all the panes into little boxes.
+      $this->rendered['panes'] = array();
+
+      // TODO - make sorting of panes according to nesting
+      $this->prepared['panes'] = array_reverse($this->prepared['panes'], true);
+
+      foreach ($this->prepared['panes'] as $pid => $pane) {
+        $content = $this->render_pane($pane);
+        if ($content) {
+          $this->rendered['panes'][$pid] = $content;
+        }
+      }
+      return $this->rendered['panes'];
+  }
 }
